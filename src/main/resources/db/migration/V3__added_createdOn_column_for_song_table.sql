@@ -1,0 +1,3 @@
+ALTER TABLE song
+    ADD created_on TIMESTAMP WITHOUT TIME ZONE;
+
