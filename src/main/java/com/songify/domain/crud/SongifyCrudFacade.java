@@ -1,8 +1,6 @@
 package com.songify.domain.crud;
 
-import com.songify.domain.crud.dto.ArtistDto;
-import com.songify.domain.crud.dto.ArtistRequestDto;
-import com.songify.domain.crud.dto.SongDto;
+import com.songify.domain.crud.dto.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,18 +21,28 @@ public class SongifyCrudFacade {
     private final SongDeleter songDeleter;
     private final SongUpdater songUpdater;
     private final ArtistAdder artistAdder;
+    private final GenreAdder genreAdder;
+    private final AlbumAdder albumAdder;
 
 
+    public AlbumDto addAlbum(AlbumRequestDto albumRequestDto) {
+        return albumAdder.addAlbum(albumRequestDto.songId(), albumRequestDto.title(),
+                albumRequestDto.releaseDate());
+    }
 
+    public GenreDto addGenre(GenreRequestDto genreRequestDto) {
+        return genreAdder.addGenre(genreRequestDto.name());
+    }
 
     public ArtistDto addArtist(ArtistRequestDto artistRequestDto) {
         return artistAdder.addArtist(artistRequestDto.name());
     }
 
-    public SongDto addSong(SongDto song) {
+    public SongDto addSong(SongRequestDto song) {
+
         log.info("Added new song: {}", song);
-       Song added = songAdder.addSong(Song.builder().name(song.name()).build());
-       return SongDto.builder().id(added.getId()).name(added.getName()).build();
+      return  songAdder.addSong(song);
+
     }
 
     public List<SongDto> findAll(Pageable pageable) {

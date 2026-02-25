@@ -1,4 +1,5 @@
 package com.songify.domain.crud;
+import com.songify.domain.crud.dto.SongLanguageDto;
 import com.songify.domain.crud.util.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,14 @@ class Song extends BaseEntity {
         this.id = id;
         this.name = name;
         this.artist = artist;
+    }
+
+    public Song(String name, Instant releaseDate, Long duration, SongLanguage language) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.language = language;
+
     }
 
 }

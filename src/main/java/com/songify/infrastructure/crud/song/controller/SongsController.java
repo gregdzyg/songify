@@ -1,6 +1,7 @@
 package com.songify.infrastructure.crud.song.controller;
 import com.songify.domain.crud.SongifyCrudFacade;
 import com.songify.domain.crud.dto.SongDto;
+import com.songify.domain.crud.dto.SongRequestDto;
 import com.songify.infrastructure.crud.song.controller.dto.request.UpdateSongRequestDto;
 import com.songify.infrastructure.crud.song.controller.dto.response.*;
 import com.songify.infrastructure.crud.song.controller.dto.request.CreateSongRequestDto;
@@ -46,10 +47,10 @@ public class SongsController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateSongResponseDto> addSong(@RequestBody @Valid CreateSongRequestDto body) {
-        SongDto song = mapFromCreateSongRequestDtoToSongDto(body);
-        SongDto savedSong = songifyCrudFacade.addSong(song);
-        return ResponseEntity.ok(mapFromSongDtoToCreateSongResponseDto(savedSong));
+    public ResponseEntity<CreateSongResponseDto> addSong(@RequestBody @Valid SongRequestDto request) {
+        SongDto savedSong = songifyCrudFacade.addSong(request);
+        CreateSongResponseDto body = new CreateSongResponseDto(savedSong.id(), savedSong.name());
+        return ResponseEntity.ok(body);
     }
 
     @DeleteMapping("/{id}")

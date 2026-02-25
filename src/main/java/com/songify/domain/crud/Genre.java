@@ -2,13 +2,11 @@ package com.songify.domain.crud;
 
 import com.songify.domain.crud.util.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter(AccessLevel.PACKAGE)
 @Setter(AccessLevel.PACKAGE)
 class Genre extends BaseEntity {
@@ -22,5 +20,9 @@ class Genre extends BaseEntity {
     )
     private Long id;
     private String name;
+
+    public Genre(String name) {
+        this.name = name;
+    }
 
 }
