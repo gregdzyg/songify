@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.songify.domain.crud.SongDomainMapper.mapFromSongToSOngDto;
 
@@ -23,6 +24,7 @@ public class SongifyCrudFacade {
     private final ArtistAdder artistAdder;
     private final GenreAdder genreAdder;
     private final AlbumAdder albumAdder;
+    private final  ArtistRetriever artistRetriever;
 
 
     public AlbumDto addAlbum(AlbumRequestDto albumRequestDto) {
@@ -45,7 +47,11 @@ public class SongifyCrudFacade {
 
     }
 
-    public List<SongDto> findAll(Pageable pageable) {
+    public Set<ArtistDto> findAllArtists(Pageable pageable) {
+       return artistRetriever.findAllArtists(pageable);
+    }
+
+    public List<SongDto> findAllSongs(Pageable pageable) {
         log.info("Retrieving all songs");
         return songRetriever.findAll(pageable).stream()
                 .map(song -> SongDto.builder()
@@ -55,18 +61,18 @@ public class SongifyCrudFacade {
                 .toList();
     }
 
-    public SongDto findById(Long id) {
+    public SongDto findSongById(Long id) {
         return mapFromSongToSOngDto(songRetriever.findById(id));
     }
 
-    public void deleteById(Long id) {
+    public void deleteSongById(Long id) {
         songRetriever.findById(id);
         log.info("Deleting song with id {}", id);
         songDeleter.deleteById(id);
     }
 
     @Transactional
-    public void updateById(Long id, SongDto newSong) {
+    public void updateSongById(Long id, SongDto newSong) {
         //hibernate dirty checking
         // Song songById = songRetriever.findById(id);
         // songById.setName(newSong.getName());

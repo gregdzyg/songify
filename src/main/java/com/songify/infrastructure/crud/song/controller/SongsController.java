@@ -4,7 +4,6 @@ import com.songify.domain.crud.dto.SongDto;
 import com.songify.domain.crud.dto.SongRequestDto;
 import com.songify.infrastructure.crud.song.controller.dto.request.UpdateSongRequestDto;
 import com.songify.infrastructure.crud.song.controller.dto.response.*;
-import com.songify.infrastructure.crud.song.controller.dto.request.CreateSongRequestDto;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 
@@ -32,7 +31,7 @@ public class SongsController {
     @GetMapping
     public ResponseEntity<GetSongResponseDto> getAllSongs(@PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-        List<SongDto> songs = songifyCrudFacade.findAll(pageable);
+        List<SongDto> songs = songifyCrudFacade.findAllSongs(pageable);
         GetSongResponseDto responseDto = mapFromSongDtoToGetSongResponseDto(songs);
         return ResponseEntity.ok(responseDto);
     }
@@ -41,7 +40,7 @@ public class SongsController {
     public ResponseEntity<SingleSongResponseDto> getSongById(@PathVariable Long id,
                                                              @RequestHeader(required = false) String requestId) {
         log.info(requestId);
-        SongDto songDto = songifyCrudFacade.findById(id);
+        SongDto songDto = songifyCrudFacade.findSongById(id);
         SingleSongResponseDto responseDto = mapFromSongDtoToSingleSongResponseDto(songDto);
         return ResponseEntity.ok(responseDto);
     }
@@ -55,7 +54,7 @@ public class SongsController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DeleteSongResponseDto> deleteSongById(@PathVariable Long id) {
-        songifyCrudFacade.deleteById(id);
+        songifyCrudFacade.deleteSongById(id);
         return ResponseEntity.ok(mapFromSongToDeleteSongResponseDto(id));
     }
 
@@ -64,8 +63,8 @@ public class SongsController {
                                                                 @RequestBody @Valid UpdateSongRequestDto body) {
 
         SongDto newSong = mapFromUpdateSongRequestDtoToSongDto(body);
-        songifyCrudFacade.updateById(id, newSong);
-        SongDto fresh = songifyCrudFacade.findById(id);
+        songifyCrudFacade.updateSongById(id, newSong);
+        SongDto fresh = songifyCrudFacade.findSongById(id);
         return ResponseEntity.ok(mapFromSongDtoToUpdateSongResponseDto(fresh));
     }
 
