@@ -1,10 +1,14 @@
 package com.songify.domain.crud;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 @Component
@@ -20,4 +24,9 @@ interface SongRepository extends Repository<Song, Long> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query("UPDATE Song s SET s.name = :#{#newSong.name}, s.artist = :#{#newSong.artist} WHERE s.id = :id")
     void updateById(Long id, Song newSong);
+    @Modifying
+    @Transactional
+    @Query("delete from Song s where s.id in :ids")
+    void deleteByIdIn(Collection<Long> ids);
+
 }

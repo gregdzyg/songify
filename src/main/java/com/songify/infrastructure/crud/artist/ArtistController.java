@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-
 @RequestMapping("/artist")
 @RestController
 @AllArgsConstructor
@@ -28,6 +26,12 @@ public class ArtistController {
     ResponseEntity<ArtistDto> postArtist(@RequestBody ArtistRequestDto artistRequestDto) {
         ArtistDto artistDto = songifyCrudFacade.addArtist(artistRequestDto);
         return ResponseEntity.ok(artistDto);
+    }
+
+    @DeleteMapping("/{id}")
+     ResponseEntity<Void> deleteArtistByIdWithAlbumsAndSongs(@PathVariable Long id) {
+       songifyCrudFacade.deleteArtistByIdWithAlbumsAndSongs(id);
+       return ResponseEntity.noContent().build();
     }
 
 }

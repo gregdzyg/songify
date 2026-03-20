@@ -30,6 +30,7 @@ class Song extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SongLanguage language;
     @OneToOne(optional = false)
+    @JoinColumn(name = "genre_id", nullable = false, unique = true)
     private Genre genre;
     @ManyToOne
     private Album album;

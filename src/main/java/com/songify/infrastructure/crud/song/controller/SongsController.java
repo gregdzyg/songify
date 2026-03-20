@@ -58,6 +58,12 @@ public class SongsController {
         return ResponseEntity.ok(mapFromSongToDeleteSongResponseDto(id));
     }
 
+    @DeleteMapping("/{songId}/genre")
+    public ResponseEntity<DeleteSongResponseDto> deleteSongAndGenreById(@PathVariable Long songId) {
+        songifyCrudFacade.deleteSongAndGenreById(songId);
+        return ResponseEntity.ok(mapFromSongToDeleteSongResponseDto(songId));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UpdateSongResponseDto> updateSongById(@PathVariable Long id,
                                                                 @RequestBody @Valid UpdateSongRequestDto body) {

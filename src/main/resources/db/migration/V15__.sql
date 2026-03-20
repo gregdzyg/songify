@@ -1,0 +1,8 @@
+ALTER TABLE song
+    ADD CONSTRAINT uc_song_genre UNIQUE (genre_id);
+
+ALTER TABLE song
+    ALTER COLUMN genre_id SET NOT NULL;
+
+ALTER TABLE album
+    ALTER COLUMN uuid DROP NOT NULL;

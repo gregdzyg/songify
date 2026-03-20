@@ -25,6 +25,8 @@ public class SongifyCrudFacade {
     private final GenreAdder genreAdder;
     private final AlbumAdder albumAdder;
     private final  ArtistRetriever artistRetriever;
+    private final AlbumRetriever albumRetriever;
+    private final ArtistDeleter artistDeleter;
 
 
     public AlbumDto addAlbum(AlbumRequestDto albumRequestDto) {
@@ -47,8 +49,17 @@ public class SongifyCrudFacade {
 
     }
 
+    public AlbumDtoWithSongAndArtist findAlbumWithArtistAndSongById(Long id) {
+       return albumRetriever.findAlbumWithArtistAndSongById(id);
+    }
+
     public Set<ArtistDto> findAllArtists(Pageable pageable) {
        return artistRetriever.findAllArtists(pageable);
+    }
+
+    public void deleteArtistByIdWithAlbumsAndSongs(Long artistId) {
+        artistDeleter.deleteArtistByIdWithAlbumsAndSongs(artistId);
+
     }
 
     public List<SongDto> findAllSongs(Pageable pageable) {
@@ -63,6 +74,11 @@ public class SongifyCrudFacade {
 
     public SongDto findSongById(Long id) {
         return mapFromSongToSOngDto(songRetriever.findById(id));
+    }
+
+    @Transactional
+    public void deleteSongAndGenreById(Long songId) {
+        songDeleter.deleteSongAndGenreById(songId);
     }
 
     public void deleteSongById(Long id) {

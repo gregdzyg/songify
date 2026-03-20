@@ -19,4 +19,8 @@ class ArtistRetriever {
         return artistRepository.findAll(pageable).stream().map(artist ->
                 new ArtistDto(artist.getName())).collect(Collectors.toSet());
     }
+
+    public Artist findById(Long artistId) {
+       return  artistRepository.findById(artistId).orElseThrow(() -> new ArtistNotFoundException(artistId.toString()));
+    }
 }
