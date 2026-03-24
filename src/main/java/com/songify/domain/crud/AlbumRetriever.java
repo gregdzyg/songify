@@ -37,4 +37,9 @@ class AlbumRetriever {
     Set<Album> findAlbumsByArtistId(Long id) {
         return albumRepository.findByArtistId(id);
     }
+
+    Album findById(Long id) {
+        return albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(
+                "ALbum with id " + id + "not found"));
+    }
 }
