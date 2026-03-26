@@ -29,7 +29,7 @@ class Song extends BaseEntity {
     private Long duration;
     @Enumerated(EnumType.STRING)
     private SongLanguage language;
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "genre_id", nullable = false, unique = true)
     private Genre genre;
     @ManyToOne
@@ -57,4 +57,7 @@ class Song extends BaseEntity {
 
     }
 
+    public Song(String name) {
+        this.name = name;
+    }
 }

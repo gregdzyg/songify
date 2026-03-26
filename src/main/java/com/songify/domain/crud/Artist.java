@@ -25,7 +25,7 @@ class Artist extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Album> albums = new HashSet<>();
 
     public Artist(String name) {

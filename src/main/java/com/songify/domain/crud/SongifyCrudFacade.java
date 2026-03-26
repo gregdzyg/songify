@@ -72,6 +72,10 @@ public class SongifyCrudFacade {
        return artistUpdater.updateArtistNameById(artistId, name);
     }
 
+    public ArtistDto addArtistWithDefaultAlbumAndSong(ArtistRequestDto artistRequestDto) {
+        return artistAdder.addArtistWithDefaultAlbumAndSong(artistRequestDto);
+    }
+
     public List<SongDto> findAllSongs(Pageable pageable) {
         log.info("Retrieving all songs");
         return songRetriever.findAll(pageable).stream()

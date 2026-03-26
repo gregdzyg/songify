@@ -28,7 +28,7 @@ class Album extends BaseEntity {
     private Instant releaseDate;
 
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "album_id")
     private Set<Song> songs = new HashSet<>();
 
