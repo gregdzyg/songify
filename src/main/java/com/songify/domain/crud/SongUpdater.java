@@ -19,12 +19,12 @@ class SongUpdater {
     }
     @Transactional
     void updateById(Long id, Song newSong) {
-        //hibernate dirty checking
-       // Song songById = songRetriever.findById(id);
-       // songById.setName(newSong.getName());
-       // songById.setArtist(newSong.getArtist());
-        songRetriever.findById(id);
-        songRepository.updateById(id, newSong);
+        Song currentSong = songRetriever.findById(id);
+        Song songToUpdate = Song.builder()
+                .name(newSong.getName() == null ? currentSong.getName() : newSong.getName())
+                .artist(newSong.getArtist() == null ? currentSong.getArtist() : newSong.getArtist())
+                .build();
+        songRepository.updateById(id, songToUpdate);
     }
     @Transactional
     void partiallyUpdateById(Long id, Song updatedSong) {

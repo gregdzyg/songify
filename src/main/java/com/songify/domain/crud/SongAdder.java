@@ -20,6 +20,7 @@ class SongAdder {
     SongDto addSong(SongRequestDto songRequestDto) {
         Song song = new Song(songRequestDto.name(), songRequestDto.releaseDate(), songRequestDto.duration(),
                 SongLanguage.valueOf(songRequestDto.language().name()));
+        song.setGenre(new Genre("default-genre"));
         log.info("Added new song: {}", song);
         Song savedSong = songRepository.save(song);
         return new SongDto(savedSong.getId(), savedSong.getName());

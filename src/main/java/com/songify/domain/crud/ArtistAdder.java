@@ -2,16 +2,11 @@ package com.songify.domain.crud;
 
 import com.songify.domain.crud.dto.ArtistDto;
 import com.songify.domain.crud.dto.ArtistRequestDto;
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -42,7 +37,7 @@ class ArtistAdder {
         Genre genre = new Genre("default-genre");
         song.setGenre(genre);
         album.addSong(song);
-        artist.setAlbums(Set.of(album));
+        artist.addAlbum(album);
         return artistRepository.save(artist);
     }
 }

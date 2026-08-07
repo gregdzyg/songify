@@ -27,13 +27,13 @@ class ArtistDeleter {
             return;
         }
 
-        albums.stream()
-                .filter(album -> album.getArtists().size() >= 2)
-                .forEach(album -> album.deleteArtist(artist));
-
         Set<Album> albumsWithOnlyOneArtist = albums.stream()
                 .filter(album -> album.getArtists().size() == 1)
                 .collect(Collectors.toSet());
+
+        albums.stream()
+                .filter(album -> album.getArtists().size() >= 2)
+                .forEach(album -> album.deleteArtist(artist));
 
         Set<Long> allSongsIdsFromAllAlbumsWithOnlyThisArtist = albumsWithOnlyOneArtist.stream()
                 .flatMap(album -> album.getSongs().stream())

@@ -1,6 +1,5 @@
 package com.songify.domain.crud;
 
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -15,15 +14,15 @@ class SongDeleter {
     private final SongRepository songRepository;
     private final SongRetriever songRetriever;
     private final GenreDeleter genreDeleter;
-    private final PersistentContextCleaner jpaPersistentContextCleaner;
+    private final PersistentContextCleaner persistentContextCleaner;
 
 
     SongDeleter(SongRepository songRepository, SongRetriever songRetriever, GenreDeleter genreDeleter,
-                PersistentContextCleaner jpaPersistentContextCleaner) {
+                PersistentContextCleaner persistentContextCleaner) {
         this.songRepository = songRepository;
         this.songRetriever = songRetriever;
         this.genreDeleter = genreDeleter;
-        this.jpaPersistentContextCleaner = jpaPersistentContextCleaner;
+        this.persistentContextCleaner = persistentContextCleaner;
     }
     void deleteById(Long id) {
         songRetriever.findById(id);
@@ -35,7 +34,7 @@ class SongDeleter {
         Song song = songRetriever.findById(songId);
         Long genreId = song.getGenre().getId();
         songRepository.deleteById(songId);
-        jpaPersistentContextCleaner.clear();
+        persistentContextCleaner.clear();
         genreDeleter.deleteById(genreId);
 
     }

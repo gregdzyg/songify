@@ -19,7 +19,7 @@ class AlbumRetriever {
 
     AlbumDtoWithSongAndArtist findAlbumWithArtistAndSongById(Long id) {
         Album  album = albumRepository.findById(id).orElseThrow(() ->
-                new AlbumNotFoundException("Album with id " + id + "not found"));
+                new AlbumNotFoundException("Album with id " + id + " not found"));
 
         AlbumDto albumDto = new AlbumDto(album.getId(), album.getTitle());
 
@@ -40,6 +40,6 @@ class AlbumRetriever {
 
     Album findById(Long id) {
         return albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(
-                "ALbum with id " + id + "not found"));
+                "Album with id " + id + " not found"));
     }
 }

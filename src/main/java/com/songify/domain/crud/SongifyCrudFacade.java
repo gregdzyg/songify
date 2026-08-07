@@ -96,7 +96,6 @@ public class SongifyCrudFacade {
     }
 
     public void deleteSongById(Long id) {
-        songRetriever.findById(id);
         log.info("Deleting song with id {}", id);
         songDeleter.deleteById(id);
     }
@@ -107,7 +106,6 @@ public class SongifyCrudFacade {
         // Song songById = songRetriever.findById(id);
         // songById.setName(newSong.getName());
         // songById.setArtist(newSong.getArtist());
-        songRetriever.findById(id);
         songUpdater.updateById(id, Song.builder().name(newSong.name()).build());
     }
 

@@ -3,18 +3,18 @@ package com.songify.domain.crud;
 import org.springframework.data.domain.Pageable;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 class InMemoryArtistRepository implements ArtistRepository{
 
-    Map<Long, Artist> db = new HashMap<>();
-    AtomicInteger index = new AtomicInteger(0);
+    private final Map<Long, Artist> db = new LinkedHashMap<>();
+    private final AtomicLong index = new AtomicLong(0);
 
     @Override
     public Artist save(Artist artist) {
-        long index = this.index.getAndIncrement();
-        db.put(index, artist);
-        artist.setId(index);
+        long id = artist.getId() == null ? index.getAndIncrement() : artist.getId();
+        db.put(id, artist);
+        artist.setId(id);
         return artist;
     }
 
@@ -25,11 +25,10 @@ class InMemoryArtistRepository implements ArtistRepository{
 
     @Override
     public Optional<Artist> findById(Long id) {
-        return Optional.of(db.get(id));
+        return Optional.ofNullable(db.get(id));
     }
-
     @Override
     public void deleteById(Long id) {
-
+        db.remove(id);
     }
 }

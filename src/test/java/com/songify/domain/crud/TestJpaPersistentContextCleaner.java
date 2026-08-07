@@ -1,11 +1,15 @@
 package com.songify.domain.crud;
 
-import lombok.AllArgsConstructor;
-
-@AllArgsConstructor
 class TestJpaPersistentContextCleaner implements PersistentContextCleaner{
+
+    private boolean cleared;
+
     @Override
     public void clear() {
+        cleared = true;
+    }
 
+    boolean wasCleared() {
+        return cleared;
     }
 }
