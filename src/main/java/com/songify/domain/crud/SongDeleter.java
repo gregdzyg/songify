@@ -15,14 +15,15 @@ class SongDeleter {
     private final SongRepository songRepository;
     private final SongRetriever songRetriever;
     private final GenreDeleter genreDeleter;
-    private final EntityManager entityManager;
+    private final PersistentContextCleaner jpaPersistentContextCleaner;
 
 
-    SongDeleter(SongRepository songRepository, SongRetriever songRetriever, GenreDeleter genreDeleter, EntityManager entityManager) {
+    SongDeleter(SongRepository songRepository, SongRetriever songRetriever, GenreDeleter genreDeleter,
+                PersistentContextCleaner jpaPersistentContextCleaner) {
         this.songRepository = songRepository;
         this.songRetriever = songRetriever;
         this.genreDeleter = genreDeleter;
-        this.entityManager = entityManager;
+        this.jpaPersistentContextCleaner = jpaPersistentContextCleaner;
     }
     void deleteById(Long id) {
         songRetriever.findById(id);
@@ -34,7 +35,7 @@ class SongDeleter {
         Song song = songRetriever.findById(songId);
         Long genreId = song.getGenre().getId();
         songRepository.deleteById(songId);
-        entityManager.clear();
+        jpaPersistentContextCleaner.clear();
         genreDeleter.deleteById(genreId);
 
     }
