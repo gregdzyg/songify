@@ -17,4 +17,7 @@ ALTER TABLE genre
     ALTER COLUMN version SET NOT NULL;
 
 ALTER TABLE song
+    ADD version BIGINT DEFAULT 0;
+
+ALTER TABLE song
     ALTER COLUMN version SET NOT NULL;

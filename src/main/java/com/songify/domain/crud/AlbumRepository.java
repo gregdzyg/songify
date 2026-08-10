@@ -26,7 +26,7 @@ interface AlbumRepository extends Repository<Album, Long> {
           select a from Album a
           inner join a.artists artists
           where artists.id = :id
-            """)
+          """)
     Set<Album> findByArtistId(@Param("id") Long id);
     @Transactional
     @Modifying
